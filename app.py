@@ -10,7 +10,7 @@ from rag import build_rag_chain
 # ENV SETUP
 # -----------------------
 load_dotenv()
-os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY")
+os.environ["GROQ_API_KEY"] = st.secrets("GROQ_API_KEY")
 
 # -----------------------
 # PAGE CONFIG
