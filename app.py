@@ -51,7 +51,8 @@ if submitted:
             transcript = get_transcript_from_url(video_url)
 
             if not transcript:
-                st.error("Could not fetch transcript for this video.")
+                st.error("⚠️ Transcript not available for this video (blocked or disabled captions). Try another video.")
+                st.stop()
             else:
                 vector_store = create_vectorstore(transcript)
                 rag_chain = build_rag_chain(vector_store)

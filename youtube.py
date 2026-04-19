@@ -21,22 +21,26 @@ def extract_video_id(url):
 
 # Updated get_transcript_from_url function
 def get_transcript_from_url(url):
-    video_id = extract_video_id(url)
-    if not video_id:
-        print("Invalid YouTube URL")
-        return None
-
     try:
-        # 1. Initialize the API object
-        api = YouTubeTranscriptApi()
-        
-        # 2. Use fetch() or list_transcripts() instead of the old static method
-        # This is the modern way to get a single transcript
-        transcript_list = api.fetch(video_id, languages=["en", "en-US"])
+        video_id = extract_video_id(url)
+        if not video_id:
+            print("Invalid YouTube URL")
+            return None
 
-        transcript = " ".join(chunk.text for chunk in transcript_list)
-        return transcript
+        try:
+            # 1. Initialize the API object
+            api = YouTubeTranscriptApi()
+            
+            # 2. Use fetch() or list_transcripts() instead of the old static method
+            # This is the modern way to get a single transcript
+            transcript_list = api.fetch(video_id, languages=["en", "en-US"])
 
-    except TranscriptsDisabled:
-        print("No captions available for this video!")
+            transcript = " ".join(chunk.text for chunk in transcript_list)
+            return transcript
+
+        except TranscriptsDisabled:
+            print("No captions available for this video!")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
         return None
